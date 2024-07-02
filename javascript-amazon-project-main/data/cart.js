@@ -34,3 +34,16 @@ export function deleteCartItem(productId){
     cart = newCart;
     localStorage.setItem('cart', JSON.stringify(cart));
 }
+
+export function updateDeliveryOption(productId, deliveryOptionId){
+    let matchItem;
+    cart.forEach((item) => {
+      if(productId === item.productId){
+        matchItem = item;
+      }
+    });
+    matchItem.deleveryId = deliveryOptionId;
+
+    console.log(cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
