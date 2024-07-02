@@ -1,4 +1,10 @@
+import {cart, addToCart} from '../data/cart.js';
+import { products } from '../data/products.js';
+import { formatCurrencty } from './utils/money.js';
+
 let productsHTML = '';
+
+findQuantity();
 
 products.forEach((product) => {
     productsHTML +=  `<div class="product-container">
@@ -20,7 +26,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
+            $${formatCurrencty(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -52,33 +58,19 @@ products.forEach((product) => {
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+function findQuantity(){
+  let cartQuantity = 0;
+  cart.forEach((product) => {
+    cartQuantity += product.quantity;
+  });
+
+  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+}
+
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     button.addEventListener('click', () => {
         const productId = button.dataset.productId;
-
-        let matchItem;
-        cart.forEach((item) => {
-          if(productId === item.productId){
-            matchItem = item;
-          }
-        });
-        
-        if(matchItem){
-          matchItem.quantity++;
-        }
-        else{
-          cart.push({
-            productId: productId,
-            quantity: 1
-          });
-        }
-
-        let cartQuantity = 0;
-        cart.forEach((product) => {
-          cartQuantity += product.quantity;
-        });
-        
-        document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+        addToCart(productId);
+        findQuantity();
     });
 });
-
