@@ -2,7 +2,7 @@ import {cart, addToCart, deleteCartItem} from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrencty } from './utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deleveryOption } from '../data/delevery_option.js';
+import { deliveryOptions } from '../data/delevery_option.js';
 
 let productsHTML = '';
 
@@ -14,10 +14,25 @@ cart.forEach((cartItem) =>{
             addProduct = product;
         }
     });
+
+    const deliveryOptionId = cartItem.deleveryId;
+
+    let deliveryOption;
+
+    deliveryOptions.forEach((option) => {
+        if(option.id === deliveryOptionId){
+            deliveryOption = option;
+        }
+    });
+
+    const today = dayjs();
+    const deliveryDate = today.add(deliveryOption.days, 'days');
+    const dateString = deliveryDate.format('dddd, MMMM, D');
+
     productsHTML += `
     <div class="cart-item-container js-cart-item-container-${addProduct.id}">
         <div class="delivery-date">
-        Delivery date: Tuesday, June 21
+        Delivery date: ${dateString}
         </div>
 
         <div class="cart-item-details-grid">
@@ -48,7 +63,7 @@ cart.forEach((cartItem) =>{
             <div class="delivery-options-title">
             Choose a delivery option:
             </div>
-            ${deliveryOptionHTML(addProduct)}
+            ${deliveryOptionHTML(addProduct, cartItem)}
             </div>
         </div>
     </div>`
@@ -66,20 +81,19 @@ document.querySelectorAll('.js-delete-link').forEach( (link) => {
     })
 });
 
-function deliveryOptionHTML(addProduct){
+function deliveryOptionHTML(addProduct, cartItem){
     let html = ``;
 
-    deleveryOption.forEach((deliveryOption) =>{
+    deliveryOptions.forEach((deliveryOption) =>{
         const today = dayjs();
-        console.log(deliveryOption);
-
         const deliveryDate = today.add(deliveryOption.days, 'days');
         const dateString = deliveryDate.format('dddd, MMMM, D');
 
         const priceString = deliveryOption.priceCents === 0 ? 'FREE' : `$${formatCurrencty(deliveryOption.priceCents)}`
+        const isChecked = deliveryOption.id === cartItem.deleveryId;
         html +=`
             <div class="delivery-option">
-                <input type="radio"
+                <input type="radio" ${isChecked ? 'checked' : ''}
                 class="delivery-option-input"
                 name="delivery-option-${addProduct.id}">
                 <div>
