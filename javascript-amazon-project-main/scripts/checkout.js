@@ -5,7 +5,6 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions } from '../data/delevery_option.js';
 
 let productsHTML = '';
-
 cart.forEach((cartItem) =>{
 
     let addProduct; 
@@ -116,3 +115,5 @@ function deliveryOptionHTML(addProduct, cartItem){
 
     return html;
 }
+
+
