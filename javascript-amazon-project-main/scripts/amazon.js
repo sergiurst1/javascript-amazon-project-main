@@ -1,7 +1,9 @@
-import {cart, addToCart} from '../data/cart.js';
+import { Cart } from '../data/cart-class.js';
 import { products } from '../data/products.js';
 import { formatCurrencty } from './utils/money.js';
 
+
+const cart = new Cart('cart');
 let productsHTML = '';
 
 findQuantity();
@@ -19,18 +21,18 @@ products.forEach((product) => {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars * 10}.png">
+              src="${product.getStarsUrl()}">
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${formatCurrencty(product.priceCents)}
+            ${product.getPrice() }
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="js-selected-option-${product.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -60,7 +62,7 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 function findQuantity(){
   let cartQuantity = 0;
-  cart.forEach((product) => {
+  cart.cartItems.forEach((product) => {
     cartQuantity += product.quantity;
   });
 
@@ -70,7 +72,10 @@ function findQuantity(){
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
     button.addEventListener('click', () => {
         const productId = button.dataset.productId;
-        addToCart(productId);
+        let productQuantity = 1;
+        const selectedOption = document.querySelector(`.js-selected-option-${productId}`)
+        productQuantity = selectedOption.value;
+        cart.addToCart(productId, productQuantity);
         findQuantity();
     });
 });
