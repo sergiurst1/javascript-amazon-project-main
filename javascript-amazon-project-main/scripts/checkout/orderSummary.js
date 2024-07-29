@@ -1,7 +1,7 @@
 import { Cart } from '../../data/cart-class.js';
 import { getProduct} from '../../data/products.js';
 import { formatCurrencty } from '../utils/money.js';
-import { deliveryOptions, getDeliveryOption } from '../../data/delevery_option.js';
+import { deliveryOptions, getDeliveryOption } from '../../data/delevery-option.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 

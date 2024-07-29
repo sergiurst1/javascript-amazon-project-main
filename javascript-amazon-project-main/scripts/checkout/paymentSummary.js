@@ -1,6 +1,6 @@
 import { Cart } from '../../data/cart-class.js';
 import { getProduct } from "../../data/products.js"; 
-import { getDeliveryOption } from "../../data/delevery_option.js";  
+import { getDeliveryOption } from "../../data/delevery-option.js";  
 import { formatCurrencty } from "../utils/money.js";
 
 export function renderPaymentSummary(){
