@@ -39,11 +39,11 @@ Acest proiect este "static" și nu necesită un server sau un proces de build. P
 ```bash
 git clone https://github.com/sergiurst1/javascript-amazon-project-main.git
 ```
-**2. Navigheaza in directorul proiectului
+**2. Navigheaza in directorul proiectului**
 ```bash
 cd javascript-amazon-project-main
 ```
-**3. Deschide fișierul amazon.html
+**3. Deschide fișierul amazon.html**
 ```bash
 # Pe macOS
 open amazon.html
